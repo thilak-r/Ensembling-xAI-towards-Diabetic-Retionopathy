@@ -367,6 +367,3 @@ Project: [DR-AI DETECT](https://github.com/thilak-r/Ensembling-xAI-towrads-Diabe
 © 2025 DR-AI Detect Project. All Rights Reserved.
 
 </div>
-```
-
-The key fix: In the Quick Navigation table, the anchor links now include the emoji in the URL (e.g., `#-overview` instead of `#overview`) to match the actual section headers with emojis.
