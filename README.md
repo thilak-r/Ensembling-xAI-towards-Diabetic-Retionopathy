@@ -6,6 +6,7 @@
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-2.0%2B-green.svg)](https://flask.palletsprojects.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-5.0%2B-green.svg)](https://www.mongodb.com/)
+![Visitors](https://visitor-badge.laobi.icu/badge?page_id=thilak-r.Ensembling-xAI-towrads-Diabetic-Retionopathy)
 
 <p>
 An advanced AI-powered system for early detection and staging of diabetic retinopathy using ensemble deep learning models with explainable AI (xAI) visualizations.
