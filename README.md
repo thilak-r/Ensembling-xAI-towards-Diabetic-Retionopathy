@@ -17,21 +17,19 @@ An advanced AI-powered system for early detection and staging of diabetic retino
 
 ---
 
-## 📋 Table of Contents
+## 📋 Quick Navigation
 
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [System Architecture](#system-architecture)
-- [Model Performance](#model-performance)
-- [Technology Stack](#technology-stack)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Model Details](#model-details)
-- [Explainable AI](#explainable-ai)
-- [Screenshots](#screenshots)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
+### Core Sections:
+[🔵 Overview](#overview) • [✨ Key Features](#key-features) • [🏗️ System Architecture](#system-architecture) • [📊 Model Performance](#model-performance)
+
+### Technical Details:
+[🛠️ Technology Stack](#technology-stack) • [🚀 Installation](#installation) • [💻 Usage](#usage) • [🧠 Model Details](#model-details)
+
+### Additional Resources:
+[🔬 Explainable AI](#explainable-ai) • [📸 Screenshots](#screenshots) • [📁 Project Structure](#project-structure) • [🤝 Contributing](#contributing)
+
+### Legal & Contact:
+[📄 License](#license) • [⚠️ Disclaimer](#disclaimer) • [📚 Citation](#citation) • [📧 Contact](#contact)
 
 ---
 
