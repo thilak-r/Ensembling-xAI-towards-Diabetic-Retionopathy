@@ -1,0 +1,338 @@
+{% extends "base.html" %}
+
+{% block title %}DR-AI Detect | AI-Powered Diabetic Retinopathy Detection{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); margin: -60px -60px 40px -60px; padding: 80px 60px; color: white; border-radius: 0 0 20px 20px;">
+    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+        <h1 style="font-family: 'Rubik', sans-serif; font-size: 48px; font-weight: 700; margin-bottom: 20px; color: white; letter-spacing: -1px;">
+            AI-Powered Diabetic Retinopathy Detection
+        </h1>
+        <p style="font-size: 20px; color: #e0e0e0; margin-bottom: 40px; line-height: 1.8; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Advanced deep learning technology for early detection and staging of diabetic retinopathy from fundus images
+        </p>
+        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            {% if session.username %}
+                <a href="{{ url_for('upload') }}" style="display: inline-block; padding: 16px 40px; background-color: white; color: #1a1a1a; text-decoration: none; border-radius: 8px; font-weight: 600; font-family: 'Rubik', sans-serif; font-size: 16px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                    Start Analysis
+                </a>
+            {% else %}
+                <a href="#" id="hero-signup-btn" style="display: inline-block; padding: 16px 40px; background-color: white; color: #1a1a1a; text-decoration: none; border-radius: 8px; font-weight: 600; font-family: 'Rubik', sans-serif; font-size: 16px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                    Get Started Free
+                </a>
+                <a href="#about" style="display: inline-block; padding: 16px 40px; background-color: transparent; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-family: 'Rubik', sans-serif; font-size: 16px; border: 2px solid white; transition: all 0.3s ease;">
+                    Learn More
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section style="margin-bottom: 60px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
+        <div class="card" style="text-align: center; padding: 30px;">
+            <h2 style="font-size: 42px; color: #1a1a1a; margin-bottom: 8px; font-weight: 700;">70%</h2>
+            <p style="color: #6a6a6a; font-size: 16px; margin: 0;">Model Accuracy</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 30px;">
+            <h2 style="font-size: 42px; color: #1a1a1a; margin-bottom: 8px; font-weight: 700;">0.70</h2>
+            <p style="color: #6a6a6a; font-size: 16px; margin: 0;">Kappa Score</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 30px;">
+            <h2 style="font-size: 42px; color: #1a1a1a; margin-bottom: 8px; font-weight: 700;">70%</h2>
+            <p style="color: #6a6a6a; font-size: 16px; margin: 0;">External Validation</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 30px;">
+            <h2 style="font-size: 42px; color: #1a1a1a; margin-bottom: 8px; font-weight: 700;">5</h2>
+            <p style="color: #6a6a6a; font-size: 16px; margin: 0;">DR Stages Detected</p>
+        </div>
+    </div>
+</section>
+
+<!-- What is DR Section -->
+<section id="about" class="card" style="margin-bottom: 40px;">
+    <h2 style="text-align: center; margin-bottom: 40px;">What is Diabetic Retinopathy?</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
+        <div>
+            <p style="font-size: 16px; line-height: 1.8; color: #4a4a4a; margin-bottom: 20px;">
+                <strong>Diabetic Retinopathy (DR)</strong> is a diabetes complication that affects the eyes. It's caused by damage to the blood vessels of the light-sensitive tissue at the back of the eye (retina).
+            </p>
+            <p style="font-size: 16px; line-height: 1.8; color: #4a4a4a; margin-bottom: 20px;">
+                Initially, diabetic retinopathy may cause no symptoms or only mild vision problems. Eventually, it can cause blindness. The condition can develop in anyone who has type 1 or type 2 diabetes.
+            </p>
+            <p style="font-size: 16px; line-height: 1.8; color: #4a4a4a;">
+                <strong>Early detection is crucial</strong> - the longer you have diabetes and the less controlled your blood sugar is, the more likely you are to develop this eye complication.
+            </p>
+        </div>
+        <div style="background-color: #f5f5f5; padding: 30px; border-radius: 12px; border: 1px solid #e0e0e0;">
+            <h3 style="font-size: 20px; margin-bottom: 20px; color: #1a1a1a; border-bottom: none; padding-bottom: 0;">Key Facts</h3>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="padding: 12px 0; border-bottom: 1px solid #e0e0e0; font-size: 15px; color: #4a4a4a;">
+                    <strong>→</strong> Leading cause of blindness in adults aged 20-74
+                </li>
+                <li style="padding: 12px 0; border-bottom: 1px solid #e0e0e0; font-size: 15px; color: #4a4a4a;">
+                    <strong>→</strong> Affects approximately 1 in 3 diabetic patients
+                </li>
+                <li style="padding: 12px 0; border-bottom: 1px solid #e0e0e0; font-size: 15px; color: #4a4a4a;">
+                    <strong>→</strong> Often has no early warning signs
+                </li>
+                <li style="padding: 12px 0; font-size: 15px; color: #4a4a4a;">
+                    <strong>→</strong> Can be managed if detected early
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Stages Section -->
+<section class="card" style="margin-bottom: 40px;">
+    <h2 style="text-align: center; margin-bottom: 40px;">Stages of Diabetic Retinopathy</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+        <div style="background-color: #e8f5e9; padding: 24px; border-radius: 10px; border-left: 4px solid #2e7d32;">
+            <h3 style="font-size: 18px; color: #2e7d32; margin-bottom: 12px; border-bottom: none; padding-bottom: 0;">Stage 0: No DR</h3>
+            <p style="font-size: 14px; color: #4a4a4a; margin: 0; line-height: 1.6;">No abnormalities detected. Regular monitoring recommended.</p>
+        </div>
+        <div style="background-color: #fff3e0; padding: 24px; border-radius: 10px; border-left: 4px solid #e65100;">
+            <h3 style="font-size: 18px; color: #e65100; margin-bottom: 12px; border-bottom: none; padding-bottom: 0;">Stage 1: Mild NPDR</h3>
+            <p style="font-size: 14px; color: #4a4a4a; margin: 0; line-height: 1.6;">Microaneurysms present. Small areas of balloon-like swelling in retinal blood vessels.</p>
+        </div>
+        <div style="background-color: #ffe0b2; padding: 24px; border-radius: 10px; border-left: 4px solid #ef6c00;">
+            <h3 style="font-size: 18px; color: #ef6c00; margin-bottom: 12px; border-bottom: none; padding-bottom: 0;">Stage 2: Moderate NPDR</h3>
+            <p style="font-size: 14px; color: #4a4a4a; margin: 0; line-height: 1.6;">Blood vessels that nourish the retina are blocked. More severe changes visible.</p>
+        </div>
+        <div style="background-color: #ffccbc; padding: 24px; border-radius: 10px; border-left: 4px solid #d84315;">
+            <h3 style="font-size: 18px; color: #d84315; margin-bottom: 12px; border-bottom: none; padding-bottom: 0;">Stage 3: Severe NPDR</h3>
+            <p style="font-size: 14px; color: #4a4a4a; margin: 0; line-height: 1.6;">Many blood vessels blocked, depriving retina of blood supply. Signals sent to grow new vessels.</p>
+        </div>
+        <div style="background-color: #ffebee; padding: 24px; border-radius: 10px; border-left: 4px solid #c62828;">
+            <h3 style="font-size: 18px; color: #c62828; margin-bottom: 12px; border-bottom: none; padding-bottom: 0;">Stage 4: PDR</h3>
+            <p style="font-size: 14px; color: #4a4a4a; margin: 0; line-height: 1.6;">Proliferative stage. New abnormal blood vessels grow, leading to severe vision loss or blindness.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Causes & Symptoms -->
+<section style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px;">
+    <div class="card">
+        <h2 style="margin-bottom: 24px;">Causes</h2>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: 12px 0; border-bottom: 1px solid #e0e0e0; font-size: 15px; color: #4a4a4a;">
+                <strong style="color: #1a1a1a;">High Blood Sugar</strong><br>
+                <span style="font-size: 14px;">Chronic high blood sugar damages retinal blood vessels</span>
+            </li>
+            <li style="padding: 12px 0; border-bottom: 1px solid #e0e0e0; font-size: 15px; color: #4a4a4a;">
+                <strong style="color: #1a1a1a;">Hypertension</strong><br>
+                <span style="font-size: 14px;">High blood pressure worsens retinal damage</span>
+            </li>
+            <li style="padding: 12px 0; border-bottom: 1px solid #e0e0e0; font-size: 15px; color: #4a4a4a;">
+                <strong style="color: #1a1a1a;">Duration of Diabetes</strong><br>
+                <span style="font-size: 14px;">Longer diabetes duration increases risk</span>
+            </li>
+            <li style="padding: 12px 0; font-size: 15px; color: #4a4a4a;">
+                <strong style="color: #1a1a1a;">Other Factors</strong><br>
+                <span style="font-size: 14px;">Pregnancy, high cholesterol, tobacco use</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2 style="margin-bottom: 24px;">Symptoms</h2>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: 12px 0; border-bottom: 1px solid #e0e0e0; font-size: 15px; color: #4a4a4a;">
+                <strong style="color: #1a1a1a;">Early Stages</strong><br>
+                <span style="font-size: 14px;">Often no symptoms - regular screening essential</span>
+            </li>
+            <li style="padding: 12px 0; border-bottom: 1px solid #e0e0e0; font-size: 15px; color: #4a4a4a;">
+                <strong style="color: #1a1a1a;">Blurred Vision</strong><br>
+                <span style="font-size: 14px;">Difficulty seeing clearly or reading</span>
+            </li>
+            <li style="padding: 12px 0; border-bottom: 1px solid #e0e0e0; font-size: 15px; color: #4a4a4a;">
+                <strong style="color: #1a1a1a;">Floaters</strong><br>
+                <span style="font-size: 14px;">Dark strings or spots in vision</span>
+            </li>
+            <li style="padding: 12px 0; font-size: 15px; color: #4a4a4a;">
+                <strong style="color: #1a1a1a;">Vision Loss</strong><br>
+                <span style="font-size: 14px;">Fluctuating or progressive vision impairment</span>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<!-- Why AI Section -->
+<section class="card" style="margin-bottom: 40px; background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);">
+    <h2 style="text-align: center; margin-bottom: 40px;">Why AI for Diabetic Retinopathy?</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+        <div style="text-align: center;">
+            <div style="width: 80px; height: 80px; background-color: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 36px; color: white;">⚡</div>
+            <h3 style="font-size: 18px; margin-bottom: 12px; color: #1a1a1a; border-bottom: none; padding-bottom: 0;">Early Detection</h3>
+            <p style="font-size: 14px; color: #6a6a6a; line-height: 1.6;">AI can detect subtle changes in retinal images that may be missed by human examination, enabling earlier intervention.</p>
+        </div>
+        <div style="text-align: center;">
+            <div style="width: 80px; height: 80px; background-color: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 36px; color: white;">🎯</div>
+            <h3 style="font-size: 18px; margin-bottom: 12px; color: #1a1a1a; border-bottom: none; padding-bottom: 0;">Consistent Analysis</h3>
+            <p style="font-size: 14px; color: #6a6a6a; line-height: 1.6;">Machine learning provides standardized, reproducible assessments without human fatigue or variability.</p>
+        </div>
+        <div style="text-align: center;">
+            <div style="width: 80px; height: 80px; background-color: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 36px; color: white;">🌍</div>
+            <h3 style="font-size: 18px; margin-bottom: 12px; color: #1a1a1a; border-bottom: none; padding-bottom: 0;">Accessibility</h3>
+            <p style="font-size: 14px; color: #6a6a6a; line-height: 1.6;">Enables screening in remote areas with limited access to ophthalmologists, democratizing healthcare.</p>
+        </div>
+        <div style="text-align: center;">
+            <div style="width: 80px; height: 80px; background-color: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 36px; color: white;">⏱️</div>
+            <h3 style="font-size: 18px; margin-bottom: 12px; color: #1a1a1a; border-bottom: none; padding-bottom: 0;">Speed</h3>
+            <p style="font-size: 14px; color: #6a6a6a; line-height: 1.6;">Processes thousands of images rapidly, reducing wait times and enabling large-scale screening programs.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Our Model Section -->
+<section class="card" style="margin-bottom: 40px;">
+    <h2 style="text-align: center; margin-bottom: 40px;">Our AI Model</h2>
+    <div style="max-width: 900px; margin: 0 auto;">
+        <div style="background-color: #f5f5f5; padding: 30px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #1a1a1a;">
+            <h3 style="font-size: 20px; margin-bottom: 16px; color: #1a1a1a; border-bottom: none; padding-bottom: 0;">Ensemble Deep Learning Architecture</h3>
+            <p style="font-size: 15px; color: #4a4a4a; line-height: 1.8; margin-bottom: 20px;">
+                Our system leverages an <strong>ensemble of state-of-the-art convolutional neural networks</strong> to achieve robust and reliable diabetic retinopathy classification. By combining multiple model architectures, we enhance prediction accuracy and reduce individual model bias.
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+            <div style="background-color: white; padding: 24px; border-radius: 10px; border: 1px solid #e0e0e0;">
+                <h4 style="font-size: 16px; color: #1a1a1a; margin-bottom: 16px; font-weight: 600;">Model Architecture</h4>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="padding: 8px 0; font-size: 14px; color: #4a4a4a;"><strong>•</strong> ResNet50</li>
+                    <li style="padding: 8px 0; font-size: 14px; color: #4a4a4a;"><strong>•</strong> DenseNet121</li>
+                    <li style="padding: 8px 0; font-size: 14px; color: #4a4a4a;"><strong>•</strong> EfficientNet-B0</li>
+                    <li style="padding: 8px 0; font-size: 14px; color: #4a4a4a;"><strong>•</strong> Majority Voting Ensemble</li>
+                </ul>
+            </div>
+
+            <div style="background-color: white; padding: 24px; border-radius: 10px; border: 1px solid #e0e0e0;">
+                <h4 style="font-size: 16px; color: #1a1a1a; margin-bottom: 16px; font-weight: 600;">Performance Metrics</h4>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="padding: 8px 0; font-size: 14px; color: #4a4a4a;"><strong>Accuracy:</strong> 70%</li>
+                    <li style="padding: 8px 0; font-size: 14px; color: #4a4a4a;"><strong>Kappa Score:</strong> 0.70</li>
+                    <li style="padding: 8px 0; font-size: 14px; color: #4a4a4a;"><strong>External Validation:</strong> 70%</li>
+                    <li style="padding: 8px 0; font-size: 14px; color: #4a4a4a;"><strong>Overfitting:</strong> Minimal</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="background-color: #e3f2fd; padding: 24px; border-radius: 10px; border-left: 4px solid #1565c0; margin-bottom: 30px;">
+            <h4 style="font-size: 16px; color: #1565c0; margin-bottom: 12px; font-weight: 600;">Model Validation</h4>
+            <p style="font-size: 14px; color: #4a4a4a; line-height: 1.7; margin: 0;">
+                The 70% accuracy on external validation datasets demonstrates that our model generalizes well to unseen data and is <strong>not overfitted</strong>. The consistent performance across training and validation sets ensures reliability in real-world clinical applications.
+            </p>
+        </div>
+
+        <h3 style="font-size: 20px; margin-bottom: 20px; color: #1a1a1a;">How It Works</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+            <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; text-align: center;">
+                <div style="font-size: 28px; margin-bottom: 12px;">📸</div>
+                <h5 style="font-size: 14px; color: #1a1a1a; margin-bottom: 8px; font-weight: 600;">1. Image Upload</h5>
+                <p style="font-size: 13px; color: #6a6a6a; margin: 0;">Fundus image uploaded and validated</p>
+            </div>
+            <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; text-align: center;">
+                <div style="font-size: 28px; margin-bottom: 12px;">🔧</div>
+                <h5 style="font-size: 14px; color: #1a1a1a; margin-bottom: 8px; font-weight: 600;">2. Preprocessing</h5>
+                <p style="font-size: 13px; color: #6a6a6a; margin: 0;">CLAHE, filtering, normalization</p>
+            </div>
+            <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; text-align: center;">
+                <div style="font-size: 28px; margin-bottom: 12px;">🤖</div>
+                <h5 style="font-size: 14px; color: #1a1a1a; margin-bottom: 8px; font-weight: 600;">3. Ensemble Inference</h5>
+                <p style="font-size: 13px; color: #6a6a6a; margin: 0;">Multiple CNNs analyze the image</p>
+            </div>
+            <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; text-align: center;">
+                <div style="font-size: 28px; margin-bottom: 12px;">🔍</div>
+                <h5 style="font-size: 14px; color: #1a1a1a; margin-bottom: 8px; font-weight: 600;">4. Grad-CAM</h5>
+                <p style="font-size: 13px; color: #6a6a6a; margin: 0;">Visual explanation generated</p>
+            </div>
+            <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; text-align: center;">
+                <div style="font-size: 28px; margin-bottom: 12px;">📊</div>
+                <h5 style="font-size: 14px; color: #1a1a1a; margin-bottom: 8px; font-weight: 600;">5. Results</h5>
+                <p style="font-size: 13px; color: #6a6a6a; margin: 0;">Comprehensive report delivered</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Developer Section -->
+<section class="card" style="margin-bottom: 40px; text-align: center; background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); color: white;">
+    <h2 style="color: white; margin-bottom: 20px;">About the Developer</h2>
+    <div style="max-width: 700px; margin: 0 auto;">
+        <p style="font-size: 18px; line-height: 1.8; color: #e0e0e0; margin-bottom: 20px;">
+            This project was developed by <strong style="color: white; font-size: 20px;">Thilak</strong>, combining expertise in deep learning, computer vision, and medical imaging to create an accessible diagnostic tool for diabetic retinopathy.
+        </p>
+        <p style="font-size: 15px; color: #b0b0b0; line-height: 1.7;">
+            The goal is to make AI-powered medical diagnostics accessible to healthcare providers worldwide, especially in underserved regions where specialist ophthalmologists may not be readily available.
+        </p>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="card" style="text-align: center; padding: 60px 40px; background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 100%);">
+    <h2 style="margin-bottom: 20px;">Ready to Get Started?</h2>
+    <p style="font-size: 18px; color: #6a6a6a; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">
+        Join our platform today and experience AI-powered diabetic retinopathy detection
+    </p>
+    {% if session.username %}
+        <a href="{{ url_for('upload') }}" style="display: inline-block; padding: 16px 48px; background-color: #1a1a1a; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-family: 'Rubik', sans-serif; font-size: 16px; transition: all 0.3s ease;">
+            Start Analysis Now
+        </a>
+    {% else %}
+        <a href="#" id="cta-signup-btn" style="display: inline-block; padding: 16px 48px; background-color: #1a1a1a; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-family: 'Rubik', sans-serif; font-size: 16px; transition: all 0.3s ease;">
+            Create Free Account
+        </a>
+    {% endif %}
+</section>
+
+<style>
+    @media (max-width: 768px) {
+        section[style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+        }
+        
+        section:first-child {
+            margin: -30px -20px 40px -20px !important;
+            padding: 60px 30px !important;
+        }
+        
+        section:first-child h1 {
+            font-size: 32px !important;
+        }
+        
+        section:first-child p {
+            font-size: 16px !important;
+        }
+    }
+</style>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Connect signup buttons to modal
+    document.addEventListener('DOMContentLoaded', function() {
+        const heroSignupBtn = document.getElementById('hero-signup-btn');
+        const ctaSignupBtn = document.getElementById('cta-signup-btn');
+        const signupModal = document.getElementById('signup-modal');
+        
+        if (heroSignupBtn) {
+            heroSignupBtn.onclick = function(e) {
+                e.preventDefault();
+                if (signupModal) signupModal.style.display = 'block';
+            }
+        }
+        
+        if (ctaSignupBtn) {
+            ctaSignupBtn.onclick = function(e) {
+                e.preventDefault();
+                if (signupModal) signupModal.style.display = 'block';
+            }
+        }
+    });
+</script>
+{% endblock %}

@@ -30,10 +30,10 @@ MODEL_CONFIGS = {
         'timm_name': 'resnext50_32x4d', # Verify exact timm name
         'weights_path': 'models/resnext50_32x4d_best_weights.pth' # Verify filename matches screenshot
     },
-    'regnety_008': { # <-- UNCOMMENT AND ADD/VERIFY THIS ENTRY
-        'timm_name': 'regnety_008', # Verify exact timm name used during training (e.g., regnety_008)
-        'weights_path': 'models/regnety_008_best_weights.pth' # Verify filename matches screenshot
-    }
+    # 'regnety_008': { # <-- UNCOMMENT AND ADD/VERIFY THIS ENTRY
+    #     'timm_name': 'regnety_008', # Verify exact timm name used during training (e.g., regnety_008)
+    #     'weights_path': 'models/regnety_008_best_weights.pth' # Verify filename matches screenshot
+    # }
     # Ensure you have an entry for each of the 5 models you trained
 }
 

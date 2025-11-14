@@ -4,7 +4,6 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 import cv2
 import numpy as np
-import base64
 import json
 
 # Load environment variables from .env file
@@ -22,8 +21,8 @@ except Exception as e:
     print(f"Error configuring Gemini API in utils.gemini_utils: {e}")
     raise e
 
-# Use the model name you found works with image input (gemini-pro-vision for multimodal)
-MULTIMODAL_MODEL_NAME = "gemini-2.5-flash-preview-04-17-thinking"
+# Use a current, stable multimodal model like 'gemini-1.5-flash-latest' or 'gemini-pro-vision'
+MULTIMODAL_MODEL_NAME = "gemini-2.5-flash-lite"
 
 
 def get_gemini_model(model_name):
@@ -150,8 +149,8 @@ def is_fundus_image_with_gemini(image_path):
 
         is_success, buffer = cv2.imencode(".jpg", img_np)
         if not is_success:
-             print(f"Validation Error: Could not encode image {image_path} to bytes for Gemini validation.")
-             return False, "Could not encode image.", "Failed to process image for validation."
+                print(f"Validation Error: Could not encode image {image_path} to bytes for Gemini validation.")
+                return False, "Could not encode image.", "Failed to process image for validation."
 
         image_part = {
             'mime_type': 'image/jpeg',
@@ -180,7 +179,7 @@ def is_fundus_image_with_gemini(image_path):
     except Exception as e:
         print(f"Validation Error: Error calling Gemini API for validation: {e}")
         if hasattr(e, 'response') and hasattr(e.response, 'prompt_feedback') and hasattr(e.response.prompt_feedback, 'block_reason'):
-             block_reason = e.response.prompt_feedback.block_reason
-             print(f"Validation Error: Prompt was blocked for reason: {block_reason}")
-             return False, f"Validation blocked: {block_reason}", f"Image validation failed (blocked): {block_reason}"
+                block_reason = e.response.prompt_feedback.block_reason
+                print(f"Validation Error: Prompt was blocked for reason: {block_reason}")
+                return False, f"Validation blocked: {block_reason}", f"Image validation failed (blocked): {block_reason}"
         return False, f"API call error: {e}", "Internal error during image validation API call."

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis Results{% endblock %}
+
+{% block content %}
+<div class="results-container">
+    <div class="card patient-info">
+        <h3>Patient & Analysis Details</h3>
+         {% if patient_name != 'N/A' and patient_name != '' %} <p><strong>Name:</strong> {{ patient_name }}</p>{% endif %}
+         {% if patient_age != 'N/A' and patient_age != '' %} <p><strong>Age:</strong> {{ patient_age }}</p>{% endif %}
+         {% if analysis_datetime is not none %} <p><strong>Analysis Time:</strong> {{ analysis_datetime }}</p>{% endif %}
+    </div>
+
+    <div class="card">
+        <h3>Image Preprocessing Steps</h3>
+        <div class="image-comparison-container">
+            <div class="image-comparison-item">
+                <h4>Original</h4>
+                <img src="{{ original_url }}" alt="Original Image">
+            </div>
+             {% if filtered_url %}
+                <div class="image-comparison-item">
+                    <h4>Filtered</h4>
+                    <img src="{{ filtered_url }}" alt="Filtered Image">
+                </div>
+             {% endif %}
+             {% if denoised_url %}
+                <div class="image-comparison-item">
+                    <h4>CLAHE Green Channel</h4>
+                    <img src="{{ denoised_url }}" alt="CLAHE Green Channel Image">
+                </div>
+             {% endif %}
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>AI Analysis</h2>
+        <div class="column-container">
+            <div class="column-item">
+                 <h3>Model Results Summary</h3>
+                 {% if model_results_text %}
+                     <div class="scrollable-content">{{ model_results_text | safe }}</div>
+                 {% else %}
+                     <p>Model results not available.</p>
+                 {% endif %}
+            </div>
+
+            <div class="column-item">
+                 <h3>Generated Reports (Gemini)</h3>
+                 {% if reports_html %}
+                     <h4 style="font-family: 'Rubik', sans-serif; font-size: 18px; font-weight: 600; color: #2a2a2a; margin-bottom: 10px;">Comprehensive Report</h4>
+                     <div class="scrollable-content">{{ reports_html.comprehensive | safe }}</div>
+                     <h4 style="font-family: 'Rubik', sans-serif; font-size: 18px; font-weight: 600; color: #2a2a2a; margin: 24px 0 10px 0;">Synthetic Impression</h4>
+                     <div class="scrollable-content">{{ reports_html.synthetic | safe }}</div>
+                 {% else %}
+                     <p>Reports could not be generated.</p>
+                 {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>Grad-CAM Visualizations</h3>
+         <p style="color: #4a4a4a; font-size: 15px; margin-bottom: 24px;">These heatmaps show the regions of the image the AI model focused on for its prediction.</p>
+         {% if gradcam_data %}
+              <div class="gradcam-container">
+                  {% for item in gradcam_data %}
+                       <div class="gradcam-item">
+                           <img src="{{ item.url }}" alt="{{ item.model_name }} GradCAM Overlay">
+                           <h5>{{ item.model_name }}</h5>
+                       </div>
+                  {% endfor %}
+              </div>
+          {% else %}
+              <p style="color: #6a6a6a; font-size: 15px;">GradCAM could not be generated (may not be required for Stage 0).</p>
+         {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DR Detection | Medical Imaging AI{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS Reset & General --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Barlow', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Flash Messages --- */
+        .flash-messages {
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 60px;
+            width: 100%;
+        }
+
+        .flash-message {
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 15px;
+            font-weight: 500;
+            border-left: 4px solid;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .flash-message.success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border-left-color: #2e7d32;
+        }
+
+        .flash-message.error {
+            background-color: #ffebee;
+            color: #c62828;
+            border-left-color: #c62828;
+        }
+
+        .flash-message.warning {
+            background-color: #fff3e0;
+            color: #e65100;
+            border-left-color: #e65100;
+        }
+
+        .flash-message.info {
+            background-color: #e3f2fd;
+            color: #1565c0;
+            border-left-color: #1565c0;
+        }
+
+        /* --- Header & Navigation --- */
+        .header {
+            background-color: #1a1a1a;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2a2a2a;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header .logo {
+            font-size: 26px;
+            font-weight: 600;
+            font-family: 'Rubik', sans-serif;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .header nav {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .header nav a {
+            color: #b0b0b0;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+        }
+
+        .header nav a:hover {
+            color: #ffffff;
+            background-color: #2a2a2a;
+        }
+
+        .header nav a.active {
+            color: #ffffff;
+            background-color: #333333;
+        }
+
+        .user-welcome {
+            color: #b0b0b0;
+            font-size: 15px;
+            margin-right: 10px;
+        }
+
+        .user-welcome strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* --- Main Content --- */
+        main {
+            flex: 1;
+            padding: 60px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* --- Card Style --- */
+        .card {
+            background-color: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .card h1 {
+            font-family: 'Rubik', sans-serif;
+            color: #1a1a1a;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .card h2 {
+            font-family: 'Rubik', sans-serif;
+            color: #1a1a1a;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+        }
+
+        .card h3 {
+            font-family: 'Rubik', sans-serif;
+            color: #2a2a2a;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .card > p {
+            color: #4a4a4a;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        /* --- Form Elements --- */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #2a2a2a;
+            font-size: 15px;
+            letter-spacing: 0.2px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="number"],
+        .form-group input[type="password"],
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #d0d0d0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Barlow', sans-serif;
+            background-color: #ffffff;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="number"]:focus,
+        .form-group input[type="password"]:focus,
+        .form-group input[type="file"]:focus {
+            outline: none;
+            border-color: #333333;
+            box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.1);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 16px 24px;
+            background-color: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Rubik', sans-serif;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-submit:hover {
+            background-color: #2a2a2a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        /* --- Results Display --- */
+        .results-container h2 { 
+            text-align: center; 
+            font-size: 32px; 
+            font-family: 'Rubik', sans-serif;
+            margin-bottom: 30px;
+        }
+
+        .column-container { 
+            display: flex; 
+            gap: 30px; 
+            flex-wrap: wrap; 
+        }
+
+        .column-item { 
+            flex: 1; 
+            min-width: 300px; 
+        }
+        
+        .patient-info p { 
+            margin: 0 0 12px 0; 
+            font-size: 16px;
+            color: #3a3a3a;
+        }
+
+        .patient-info p strong { 
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .image-comparison-container { 
+            display: flex; 
+            gap: 24px; 
+            margin-bottom: 20px; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+        }
+
+        .image-comparison-item { 
+            text-align: center; 
+            flex: 1; 
+            min-width: 200px; 
+            max-width: 320px; 
+        }
+
+        .image-comparison-item img { 
+            max-width: 100%; 
+            height: auto; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .image-comparison-item img:hover {
+            transform: scale(1.02);
+        }
+
+        .image-comparison-item h4 { 
+            color: #3a3a3a; 
+            margin-bottom: 12px;
+            font-family: 'Rubik', sans-serif;
+            font-weight: 500;
+            font-size: 15px;
+            letter-spacing: 0.3px;
+        }
+
+        .gradcam-container { 
+            display: flex; 
+            gap: 20px; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+        }
+
+        .gradcam-item { 
+            text-align: center; 
+            margin-bottom: 10px; 
+            flex: 1; 
+            min-width: 200px; 
+            max-width: 280px; 
+        }
+
+        .gradcam-item img { 
+            max-width: 100%; 
+            height: auto; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .gradcam-item img:hover {
+            transform: scale(1.02);
+        }
+
+        .gradcam-item h5 { 
+            color: #3a3a3a; 
+            margin: 12px 0;
+            font-family: 'Rubik', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .scrollable-content {
+            height: 280px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            margin-top: 10px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            line-height: 1.8;
+            color: #3a3a3a;
+        }
+
+        .scrollable-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-track {
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-thumb {
+            background: #c0c0c0;
+            border-radius: 4px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-thumb:hover {
+            background: #a0a0a0;
+        }
+        
+        /* --- Processing Overlay --- */
+        #processing-overlay {
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            z-index: 1000; 
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: column;
+        }
+
+        #processing-box { 
+            background-color: #fafafa; 
+            padding: 50px; 
+            border-radius: 12px; 
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            max-width: 500px;
+        }
+
+        #processing-box h3 { 
+            margin-top: 0; 
+            color: #1a1a1a;
+            font-family: 'Rubik', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        #processing-steps { 
+            list-style: none; 
+            padding: 0; 
+            text-align: left; 
+            margin-top: 30px; 
+        }
+
+        #processing-steps li { 
+            margin-bottom: 12px; 
+            color: #6a6a6a;
+            font-size: 15px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        #processing-steps li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #c0c0c0;
+        }
+
+        #processing-steps li.active { 
+            font-weight: 600; 
+            color: #1a1a1a;
+        }
+
+        #processing-steps li.active:before {
+            color: #1a1a1a;
+        }
+
+        #processing-spinner { 
+            border: 3px solid #f0f0f0; 
+            border-top: 3px solid #1a1a1a; 
+            border-radius: 50%; 
+            width: 40px; 
+            height: 40px; 
+            animation: spin 1s linear infinite; 
+            margin: 20px auto; 
+        }
+
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+
+        /* --- Footer --- */
+        .footer {
+            text-align: center;
+            padding: 30px 60px;
+            background-color: #1a1a1a;
+            color: #b0b0b0;
+            margin-top: 60px;
+            border-top: 1px solid #2a2a2a;
+        }
+
+        .footer p {
+            margin: 8px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* --- Modal --- */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
+            left: 0; 
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-content {
+            background-color: #ffffff; 
+            margin: 10% auto; 
+            padding: 0;
+            border: 1px solid #e0e0e0; 
+            width: 90%; 
+            max-width: 480px;
+            border-radius: 12px;
+            animation: modalopen 0.4s ease;
+        }
+
+        .modal-header { 
+            padding: 24px 30px; 
+            background-color: #1a1a1a; 
+            color: white; 
+            border-top-left-radius: 12px; 
+            border-top-right-radius: 12px; 
+        }
+
+        .modal-header h2 { 
+            margin: 0; 
+            font-size: 22px;
+            font-family: 'Rubik', sans-serif;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .modal-body { 
+            padding: 30px; 
+        }
+
+        .close-btn { 
+            color: white; 
+            float: right; 
+            font-size: 28px; 
+            font-weight: 300; 
+            cursor: pointer;
+            line-height: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .close-btn:hover { 
+            opacity: 0.7;
+        }
+
+        @keyframes modalopen { 
+            from { 
+                opacity: 0; 
+                transform: translateY(-30px); 
+            } 
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            } 
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 30px;
+                flex-wrap: wrap;
+            }
+
+            .header nav {
+                flex-wrap: wrap;
+            }
+
+            main {
+                padding: 30px 20px;
+            }
+
+            .card {
+                padding: 30px 25px;
+            }
+
+            .column-container {
+                flex-direction: column;
+            }
+
+            .footer {
+                padding: 25px 20px;
+            }
+
+            .flash-messages {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">DR-AI DETECT</div>
+        <nav>
+            <a href="{{ url_for('index') }}" id="home-link">Home</a>
+            
+            {% if session.username %}
+                <a href="{{ url_for('history') }}" id="history-link">History</a>
+                <span class="user-welcome">Hello, <strong>{{ session.username }}</strong></span>
+                <a href="{{ url_for('logout') }}" id="logout-link">Logout</a>
+            {% else %}
+                <a href="#" id="login-btn">Login</a>
+                <a href="#" id="signup-btn">Sign Up</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 DR-AI Detect Project. All Rights Reserved.</p>
+        <p>Disclaimer: This tool is for research and informational purposes only and is not a substitute for professional medical advice.</p>
+    </footer>
+
+    <div id="processing-overlay">
+        <div id="processing-box">
+            <h3>Processing Image...</h3>
+            <div id="processing-spinner"></div>
+            <ul id="processing-steps">
+                <li>Saving image</li>
+                <li>Validating image type</li>
+                <li>Applying preprocessing filters</li>
+                <li>Performing model inference</li>
+                <li>Generating Grad-CAM visualizations</li>
+                <li>Generating reports</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn">&times;</span>
+                <h2>Login</h2>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('login') }}" method="post">
+                    <div class="form-group">
+                        <label for="login-user">Username</label>
+                        <input type="text" id="login-user" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-pass">Password</label>
+                        <input type="password" id="login-pass" name="password" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn">&times;</span>
+                <h2>Create Account</h2>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('signup') }}" method="post">
+                    <div class="form-group">
+                        <label for="signup-user">Username</label>
+                        <input type="text" id="signup-user" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email (Optional)</label>
+                        <input type="email" id="signup-email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-pass">Password</label>
+                        <input type="password" id="signup-pass" name="password" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Form Submission Overlay Logic ---
+            const uploadForm = document.getElementById('uploadForm');
+            const processingOverlay = document.getElementById('processing-overlay');
+            if (uploadForm) {
+                uploadForm.addEventListener('submit', function() {
+                    if(processingOverlay) {
+                        processingOverlay.style.display = 'flex';
+                    }
+                });
+            }
+
+            // --- Modal Logic ---
+            const loginModal = document.getElementById('login-modal');
+            const signupModal = document.getElementById('signup-modal');
+            const loginBtn = document.getElementById('login-btn');
+            const signupBtn = document.getElementById('signup-btn');
+            const closeButtons = document.querySelectorAll('.close-btn');
+
+            // Open modals
+            if (loginBtn) {
+                loginBtn.onclick = function(e) { 
+                    e.preventDefault();
+                    loginModal.style.display = 'block'; 
+                }
+            }
+            if (signupBtn) {
+                signupBtn.onclick = function(e) { 
+                    e.preventDefault();
+                    signupModal.style.display = 'block'; 
+                }
+            }
+
+            // Close modals
+            closeButtons.forEach(btn => {
+                btn.onclick = function() {
+                    loginModal.style.display = 'none';
+                    signupModal.style.display = 'none';
+                }
+            });
+
+            // Close modal on outside click
+            window.onclick = function(event) {
+                if (event.target == loginModal) {
+                    loginModal.style.display = "none";
+                }
+                if (event.target == signupModal) {
+                    signupModal.style.display = "none";
+                }
+            }
+
+            // Auto-hide flash messages after 5 seconds
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(msg => {
+                setTimeout(() => {
+                    msg.style.animation = 'slideOut 0.3s ease forwards';
+                    setTimeout(() => msg.remove(), 300);
+                }, 5000);
+            });
+        });
+
+        // Add slideOut animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideOut {
+                to {
+                    opacity: 0;
+                    transform: translateX(100%);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
