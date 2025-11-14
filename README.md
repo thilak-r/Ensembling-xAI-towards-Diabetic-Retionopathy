@@ -368,3 +368,5 @@ Project: [DR-AI DETECT](https://github.com/thilak-r/Ensembling-xAI-towrads-Diabe
 © 2025 DR-AI Detect Project. All Rights Reserved.
 
 </div>
+## Keywords (SEO)
+Diabetic Retinopathy, Deep Learning, Ensemble Learning, Explainable AI, Grad-CAM, Medical Imaging, Retinal Fundus Images, Disease Classification, Healthcare AI, Computer Vision, CNN, PyTorch.
