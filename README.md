@@ -1,3 +1,5 @@
+<div align="center">
+
 # DR-AI DETECT: Ensembling xAI towards Diabetic Retinopathy Detection
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -5,8 +7,14 @@
 [![Flask](https://img.shields.io/badge/Flask-2.0%2B-green.svg)](https://flask.palletsprojects.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-5.0%2B-green.svg)](https://www.mongodb.com/)
 
+<p>
 An advanced AI-powered system for early detection and staging of diabetic retinopathy using ensemble deep learning models with explainable AI (xAI) visualizations.
-![Home Page](assets/architecture.jpg)
+</p>
+
+<img src="assets/architecture.jpg" alt="Architecture" width="70%">
+
+</div>
+
 ---
 
 ## 📋 Table of Contents
@@ -242,22 +250,20 @@ Gradient-weighted Class Activation Mapping highlights important image regions:
 ## 📸 Screenshots
 
 ### Landing Page
-![Home Page](assets/home_page.png)
+![Home Page](assets/homepage.png)
 
 ### Upload Interface
-![Upload](assets/upload_interface.png)
+![Upload](assets/interface.png)
 
 ### Processing Pipeline
-![Processing](assets/processing_screen.png)
-
-### Preprocessing Visualization
-![Preprocessing](assets/preprocessing_steps.png)
+![Processing](assets/image%20processing%20pipeline.png)
 
 ### Grad-CAM Results
-![Grad-CAM](assets/gradcam_results.png)
+![Grad-CAM](assets/Gradcam%20as%20POC.png)
 
 ### Analysis Report
-![Report](assets/analysis_report.png)
+![Report](assets/analysis.png)
+![Report](assets/results%20and%20reports.png)
 
 ---
 
